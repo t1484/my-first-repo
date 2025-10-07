@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アジア人2型糖尿病患者の低炭水化物食とCVDリスク</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .stat-card {
+            background-color: #363636;
+            color: white;
+        }
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1;
+            color: #F28F3B;
+        }
+        .flowchart-step {
+            background-color: #ffffff;
+            border: 2px solid #00A6A6;
+            color: #363636;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            flex-grow: 1;
+        }
+        .flowchart-arrow {
+            font-size: 2rem;
+            color: #E84855;
+            align-self: center;
+            margin: 0 1rem;
+        }
+        .recipe-output ul {
+            list-style: disc;
+            padding-left: 1.5rem;
+        }
+        .recipe-output li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <header class="bg-white shadow-md">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <h1 class="text-3xl md:text-5xl font-bold text-[#363636]">アジア人2型糖尿病患者の新たな食事戦略</h1>
+            <p class="text-lg md:text-xl mt-2 text-[#E84855]">低炭水化物食と心血管疾患(CVD)リスクの再考</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <div class="md:col-span-2 lg:col-span-3 bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-[#00A6A6] mb-4">序論：常識への挑戦</h2>
+                <p>アジアでは2型糖尿病が急増しており、心血管疾患（CVD）は依然として主要な合併症です。従来、動物性脂肪やタンパク質を多く含む食事はCVDリスクを高めると考えられてきました。しかし、2020年以降の研究では、特にアジア人において、炭水化物を質の高い動物性タンパク質や脂質に置き換える「質の高い低炭水化物食」が、むしろCVDリスクを低下させる可能性が示唆されています。このインフォグラフィックでは、その新たな知見を探ります。</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-xl font-bold text-center mb-4 text-[#363636]">伝統的な高炭水化物食</h3>
+                <div class="chart-container h-64 md:h-72">
+                    <canvas id="highCarbDietChart"></canvas>
+                </div>
+                <p class="mt-4 text-center">炭水化物が総エネルギーの大部分を占める食事構成。</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-xl font-bold text-center mb-4 text-[#363636]">質の高い低炭水化物食</h3>
+                <div class="chart-container h-64 md:h-72">
+                    <canvas id="lowCarbDietChart"></canvas>
+                </div>
+                <p class="mt-4 text-center">炭水化物を抑え、タンパク質と脂質の割合を高めた構成。</p>
+            </div>
+
+            <div class="stat-card rounded-lg shadow-lg p-6 flex flex-col justify-center items-center text-center">
+                <h3 class="text-2xl font-bold mb-2">CVDイベントリスク</h3>
+                <p class="stat-number">15%</p>
+                <p class="text-xl font-bold">低下</p>
+                <p class="mt-2 text-gray-300">日本の2型糖尿病患者を対象とした最近のコホート研究で、質の高い低炭水化物食群が示した心血管イベントの相対的リスク減少率。</p>
+            </div>
+
+            <div class="md:col-span-2 lg:col-span-3 bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-[#00A6A6] mb-4">最新研究が示すCVDリスクへの影響</h2>
+                <p class="mb-6">複数のアジア人対象研究から、炭水化物を動物性食品に置き換えることの影響は、その「質」に大きく依存することが明らかになりました。特に、加工肉ではなく、魚、鶏肉、乳製品、卵などを摂取することが重要です。</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="w-full">
+                        <h3 class="text-xl font-bold text-center mb-4 text-[#363636]">脂質プロファイルの改善効果</h3>
+                        <div class="chart-container">
+                            <canvas id="lipidProfileChart"></canvas>
+                        </div>
+                        <p class="mt-4 text-sm text-center text-gray-600">低炭水化物食は、中性脂肪を低下させ、善玉(HDL)コレステロールを増加させる傾向があります。</p>
+                    </div>
+                    <div class="w-full">
+                        <h3 class="text-xl font-bold text-center mb-4 text-[#363636]">タンパク源によるリスク変化</h3>
+                        <div class="chart-container">
+                            <canvas id="proteinSourceChart"></canvas>
+                        </div>
+                        <p class="mt-4 text-sm text-center text-gray-600">炭水化物を置き換える食品の質が、CVDリスクを左右する鍵となります。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="md:col-span-2 lg:col-span-3 bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-[#00A6A6] mb-4">推奨される食品と注意点</h2>
+                <div class="flex flex-col md:flex-row gap-8">
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold text-green-600 mb-3">✔ 推奨される動物性食品</h3>
+                        <ul class="space-y-2">
+                            <li class="bg-green-100 p-3 rounded-md"><b>魚介類：</b>特に青魚（サバ、イワシなど）はオメガ3脂肪酸が豊富</li>
+                            <li class="bg-green-100 p-3 rounded-md"><b>鶏肉：</b>皮を取り除いた胸肉やささみなど、低脂肪な部位</li>
+                            <li class="bg-green-100 p-3 rounded-md"><b>卵：</b>栄養価が高く、優れたタンパク源</li>
+                            <li class="bg-green-100 p-3 rounded-md"><b>乳製品：</b>無糖のヨーグルトやチーズなど</li>
+                        </ul>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold text-red-600 mb-3">✖ 制限すべき動物性食品</h3>
+                        <ul class="space-y-2">
+                            <li class="bg-red-100 p-3 rounded-md"><b>加工肉：</b>ソーセージ、ベーコン、ハムなど</li>
+                            <li class="bg-red-100 p-3 rounded-md"><b>赤身肉の脂肪：</b>バラ肉など、脂肪の多い部位は控えめに</li>
+                            <li class="bg-red-100 p-3 rounded-md"><b>揚げ物：</b>調理法にも注意が必要</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-span-2 lg:col-span-3 bg-[#E0F7FA] rounded-lg shadow-xl p-6 border-t-4 border-[#00A6A6] mt-8">
+                <h2 class="text-2xl font-bold text-[#00A6A6] mb-4 flex items-center">
+                    <span class="text-3xl mr-2">✨</span> AIレシピ生成アシスタント
+                </h2>
+                <p class="mb-4 text-gray-700">低炭水化物食のアイデアが欲しいですか？推奨される食材をいくつか入力してください。質の高い動物性タンパク質を重視したレシピを提案します。</p>
+                
+                <input type="text" id="ingredientInput" placeholder="例: 鶏むね肉, 卵, ほうれん草" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-[#E84855] focus:border-[#E84855] mb-4">
+                
+                <button id="generateRecipeButton" class="w-full bg-[#E84855] hover:bg-[#D4404C] text-white font-bold py-3 px-4 rounded-lg transition duration-200 shadow-md flex items-center justify-center disabled:opacity-50">
+                    レシピを生成する ✨
+                </button>
+
+                <div id="loadingIndicator" class="mt-4 text-center text-[#F28F3B] hidden">
+                    <div class="animate-spin inline-block w-6 h-6 border-4 border-t-transparent border-[#F28F3B] rounded-full"></div>
+                    <span class="ml-2">レシピを考えています...</span>
+                </div>
+
+                <div id="recipeOutput" class="mt-6 p-4 bg-white border border-[#00A6A6] rounded-lg min-h-[150px] whitespace-pre-wrap recipe-output">
+                    <p class="text-gray-500">ここに提案されたレシピが表示されます。</p>
+                </div>
+            </div>
+
+            <div class="md:col-span-2 lg:col-span-3 bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-center text-[#00A6A6] mb-6">リスク低下のメカニズム（仮説）</h2>
+                <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4">
+                    <div class="flowchart-step">血糖値の<br>急上昇を抑制</div>
+                    <div class="flowchart-arrow hidden md:block">→</div>
+                    <div class="flowchart-arrow block md:hidden">↓</div>
+                    <div class="flowchart-step">インスリン抵抗性の<br>改善</div>
+                    <div class="flowchart-arrow hidden md:block">→</div>
+                    <div class="flowchart-arrow block md:hidden">↓</div>
+                    <div class="flowchart-step">脂質プロファイルの<br>正常化</div>
+                    <div class="flowchart-arrow hidden md:block">→</div>
+                    <div class="flowchart-arrow block md:hidden">↓</div>
+                    <div class="flowchart-step">血管内皮機能の<br>改善と炎症抑制</div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-8">
+        <div class="container mx-auto px-6 py-6 text-center">
+            <h3 class="font-bold text-lg text-yellow-300">【重要】免責事項</h3>
+            <p class="mt-2 text-sm max-w-3xl mx-auto">このインフォグラフィックは情報提供を目的としたものであり、医学的なアドバイスに代わるものではありません。2型糖尿病の食事療法については、個々の健康状態や合併症のリスクが異なるため、必ず主治医や管理栄養士などの専門家にご相談ください。</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const FONT_COLOR = '#363636';
+            const GRID_COLOR = '#C5C3C6';
+            const PRIMARY_COLOR_1 = '#00A6A6';
+            const PRIMARY_COLOR_2 = '#F28F3B';
+            const ACCENT_COLOR_1 = '#E84855';
+            
+            const tooltipTitleCallback = (tooltipItems) => {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                    return label.join(' ');
+                } else {
+                    return label;
+                }
+            };
+            
+            const commonChartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: FONT_COLOR,
+                            font: {
+                                size: 12
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: FONT_COLOR },
+                        grid: { color: GRID_COLOR }
+                    },
+                    y: {
+                        ticks: { color: FONT_COLOR },
+                        grid: { color: GRID_COLOR }
+                    }
+                }
+            };
+
+            const processLabels = (labels) => {
+                const CHAR_LIMIT = 16;
+                return labels.map(label => {
+                    if (typeof label === 'string' && label.length > CHAR_LIMIT) {
+                        const words = label.split(' ');
+                        const newLabel = [];
+                        let line = '';
+                        words.forEach(word => {
+                            if ((line + word).length > CHAR_LIMIT) {
+                                newLabel.push(line.trim());
+                                line = '';
+                            }
+                            line += word + ' ';
+                        });
+                        newLabel.push(line.trim());
+                        return newLabel;
+                    }
+                    return label;
+                });
+            };
+
+            const commonDoughnutOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                           color: FONT_COLOR
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback
+                        }
+                    }
+                }
+            };
+            
+            new Chart(document.getElementById('highCarbDietChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['炭水化物', 'タンパク質', '脂質'],
+                    datasets: [{
+                        label: '栄養素バランス',
+                        data: [60, 15, 25],
+                        backgroundColor: [PRIMARY_COLOR_2, PRIMARY_COLOR_1, ACCENT_COLOR_1]
+                    }]
+                },
+                options: commonDoughnutOptions
+            });
+
+            new Chart(document.getElementById('lowCarbDietChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['炭水化物', 'タンパク質', '脂質'],
+                    datasets: [{
+                        label: '栄養素バランス',
+                        data: [30, 35, 35],
+                        backgroundColor: [PRIMARY_COLOR_2, PRIMARY_COLOR_1, ACCENT_COLOR_1]
+                    }]
+                },
+                options: commonDoughnutOptions
+            });
+
+            new Chart(document.getElementById('lipidProfileChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['中性脂肪', ['善玉(HDL)', 'コレステロール']],
+                    datasets: [
+                        {
+                            label: '高炭水化物食群 (変化量基準)',
+                            data: [0, 0],
+                            backgroundColor: GRID_COLOR,
+                        },
+                        {
+                            label: '低炭水化物食群 (変化量)',
+                            data: [-20, 10],
+                            backgroundColor: PRIMARY_COLOR_1,
+                        }
+                    ]
+                },
+                options: {
+                    ...commonChartOptions,
+                    scales: {
+                         ...commonChartOptions.scales,
+                         y: {
+                            ...commonChartOptions.scales.y,
+                            title: {
+                                display: true,
+                                text: '変化率 (%)'
+                            }
+                        }
+                    }
+                }
+            });
+
+            new Chart(document.getElementById('proteinSourceChart'), {
+                type: 'bar',
+                data: {
+                    labels: processLabels(['炭水化物を加工肉に置換', '炭水化物を魚・鶏肉・卵に置換']),
+                    datasets: [
+                        {
+                            label: 'CVDリスク相対変化',
+                            data: [18, -10],
+                            backgroundColor: [ACCENT_COLOR_1, PRIMARY_COLOR_1]
+                        }
+                    ]
+                },
+                 options: {
+                    ...commonChartOptions,
+                    plugins: {
+                        ...commonChartOptions.plugins,
+                        legend: { display: false }
+                    },
+                    scales: {
+                         ...commonChartOptions.scales,
+                         y: {
+                            ...commonChartOptions.scales.y,
+                            title: {
+                                display: true,
+                                text: 'CVDリスク変化率 (%)'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // ======== Gemini API Integration for Recipe Generation ========
+            const apiKey = "";
+            const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            const ingredientInput = document.getElementById('ingredientInput');
+            const generateRecipeButton = document.getElementById('generateRecipeButton');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const recipeOutput = document.getElementById('recipeOutput');
+
+            const systemPrompt = "あなたはアジアの食文化に精通した栄養士アシスタントです。2型糖尿病患者向けに、ユーザーが指定した食材を含み、CVDリスクを考慮した『質の高い低炭水化物食』レシピ（主菜または副菜）を日本語で提案してください。レシピは簡潔に、手順と材料を明確に記述し、可能な限りMarkdown形式（**太字**、###見出し、*リスト）で装飾してください。医学的なアドバイスは行わず、あくまで献立の提案に留めてください。";
+
+            async function fetchWithBackoff(url, options, retries = 5, delay = 1000) {
+                for (let i = 0; i < retries; i++) {
+                    try {
+                        const response = await fetch(url, options);
+                        if (response.ok) {
+                            return response;
+                        }
+                        if (response.status === 429 && i < retries - 1) {
+                            await new Promise(resolve => setTimeout(resolve, delay));
+                            delay *= 2;
+                            continue;
+                        }
+                        throw new Error(`API Error: ${response.statusText}`);
+                    } catch (error) {
+                        if (i === retries - 1) throw error;
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        delay *= 2;
+                    }
+                }
+            }
+
+            async function generateRecipe() {
+                const ingredients = ingredientInput.value.trim();
+                if (!ingredients) {
+                    recipeOutput.innerHTML = '<p class="text-red-600">食材を入力してください。</p>';
+                    return;
+                }
+
+                const userQuery = `以下の食材を使用して、低炭水化物・高タンパクなレシピを考案してください: ${ingredients}`;
+                
+                generateRecipeButton.disabled = true;
+                loadingIndicator.classList.remove('hidden');
+                recipeOutput.innerHTML = '<p class="text-gray-500">AIがレシピを生成中...</p>';
+
+                const payload = {
+                    contents: [{ parts: [{ text: userQuery }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                };
+
+                try {
+                    const response = await fetchWithBackoff(API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const result = await response.json();
+                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                    if (text) {
+                        let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                        formattedText = formattedText.replace(/###\s*(.*)/g, '<h4 class="text-lg font-semibold text-[#E84855] mt-3">$1</h4>');
+                        formattedText = formattedText.replace(/##\s*(.*)/g, '<h3 class="text-xl font-bold text-[#00A6A6] mt-4">$1</h3>');
+                        
+                        // Convert Markdown lists to HTML <ul><li>
+                        const lines = formattedText.split('\n');
+                        let outputHtml = '';
+                        let inList = false;
+
+                        lines.forEach(line => {
+                            const match = line.match(/^\*\s*(.*)/); // Match Markdown list item
+                            if (match) {
+                                if (!inList) {
+                                    outputHtml += '<ul>';
+                                    inList = true;
+                                }
+                                outputHtml += `<li>${match[1].trim()}</li>`;
+                            } else {
+                                if (inList) {
+                                    outputHtml += '</ul>';
+                                    inList = false;
+                                }
+                                outputHtml += line + '\n';
+                            }
+                        });
+
+                        if (inList) {
+                            outputHtml += '</ul>';
+                        }
+
+                        recipeOutput.innerHTML = outputHtml.replace(/\n/g, '<br>');
+                    } else {
+                        recipeOutput.innerHTML = '<p class="text-red-600">レシピの生成に失敗しました。AIモデルからの応答がありませんでした。</p>';
+                    }
+
+                } catch (error) {
+                    recipeOutput.innerHTML = '<p class="text-red-600">通信エラーが発生しました。インターネット接続を確認するか、しばらくしてからお試しください。</p>';
+                } finally {
+                    generateRecipeButton.disabled = false;
+                    loadingIndicator.classList.add('hidden');
+                }
+            }
+
+            generateRecipeButton.addEventListener('click', generateRecipe);
+        });
+    </script>
+</body>
+</html>
